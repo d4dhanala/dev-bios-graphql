@@ -42,7 +42,7 @@ const {
       fields: {
         developers: {
           type: new GraphQLList(developer),
-          resolve: () => developers   
+          resolve: () => developers  
         },
         developer: {
           type: developer,
@@ -51,7 +51,7 @@ const {
               type: GraphQLInt
             }
           },
-          resolve: (r, {id}) => developers.find(dev=>dev.id == id)
+          resolve: (r, {id}) => developers.then(devs=>devs.find(dev=>dev.id == id))
         },
         devsByFirstName: {
           type: new GraphQLList(developer),
@@ -60,7 +60,7 @@ const {
               type: GraphQLString
             }      
           },
-          resolve: (r, {name}) => developers.filter(dev=>dev.firstName.includes(name))
+          resolve: (r, {name}) =>  developers.then(devs=>devs.filter(dev=> dev.firstName && dev.firstName.includes(name)))
         },
         devsByLastName: {
           type: new GraphQLList(developer),
@@ -69,7 +69,7 @@ const {
               type: GraphQLString
             }      
           },
-          resolve: (r, {name}) => developers.filter(dev=>dev.lastName.includes(name))
+          resolve: (r, {name}) => developers.then(devs=>devs.filter(dev=>dev.lastName && dev.lastName.includes(name)))
         },
         devsByFavLang: {
           type: new GraphQLList(developer),
@@ -78,7 +78,7 @@ const {
               type: GraphQLString
             }      
           },
-          resolve: (r, {language}) => developers.filter(dev=>dev.favoriteLanguage == language)
+          resolve: (r, {language}) => developers.then(devs=>devs.filter(dev=>dev.favoriteLanguage && dev.favoriteLanguage == language))
         },
         devsByYearStarted: {
           type: new GraphQLList(developer),
@@ -87,7 +87,7 @@ const {
               type: GraphQLInt
             }      
           },
-          resolve: (r, {year}) => developers.filter(dev=>dev.yearStarted == year)
+          resolve: (r, {year}) => developers.then(devs=>devs.filter(dev=>dev.yearStarted && dev.yearStarted == year))
         },
       }
     })
