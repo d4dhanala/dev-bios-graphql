@@ -5,7 +5,15 @@ const {
     GraphQLString,
     GraphQLInt
   } = require('graphql')
-  const developers = require('./developers.json')
+  const fetch = require('node-fetch');
+  
+  fetchDevelopers  = () => {
+    return fetch("https://developer-service-overspeedy-celebratedness.cfapps.io/developers")
+    .then(response=>response.json())
+    .then(devs=>devs)
+  }
+
+  let developers = fetchDevelopers();
   
   const developer = new GraphQLObjectType({
     name: 'Developer',
@@ -34,7 +42,7 @@ const {
       fields: {
         developers: {
           type: new GraphQLList(developer),
-          resolve: () => developers
+          resolve: () => developers   
         },
         developer: {
           type: developer,
@@ -43,7 +51,7 @@ const {
               type: GraphQLInt
             }
           },
-          resolve: (r, {id}) => developers.find(dev=>dev.id = id)
+          resolve: (r, {id}) => developers.find(dev=>dev.id == id)
         },
         devsByFirstName: {
           type: new GraphQLList(developer),
@@ -79,7 +87,7 @@ const {
               type: GraphQLInt
             }      
           },
-          resolve: (r, {year}) => developers.filter(dev=>dev.yearStarted == yearStarted)
+          resolve: (r, {year}) => developers.filter(dev=>dev.yearStarted == year)
         },
       }
     })
