@@ -8,11 +8,11 @@ const {
   const fetch = require('node-fetch');
   
   fetchDevelopers  = () => {
-    return fetch("https://developer-service-overspeedy-celebratedness.cfapps.io/developers")
+    return fetch("https://tech-services-1000201953.uc.r.appspot.com/developers")
     .then(response=>response.json())
     .then(devs=>devs)
   }
-
+//const developers = require('./developers.json')
   let developers = fetchDevelopers();
   
   const developer = new GraphQLObjectType({
