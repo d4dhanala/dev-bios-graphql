@@ -12,14 +12,14 @@ const {
     .then(response=>response.json())
     .then(devs=>devs)
   }
-//const developers = require('./developers.json')
+  //const developers = require('./developers.json')
   let developers = fetchDevelopers();
   
   const developer = new GraphQLObjectType({
     name: 'Developer',
     fields: {
       id: {
-        type: GraphQLInt
+        type: GraphQLString
       },
       firstName: {
         type: GraphQLString
@@ -48,7 +48,7 @@ const {
           type: developer,
           args: {
             id: {
-              type: GraphQLInt
+              type: GraphQLString
             }
           },
           resolve: (r, {id}) => developers.then(devs=>devs.find(dev=>dev.id == id))
