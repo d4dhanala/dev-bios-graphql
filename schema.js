@@ -8,18 +8,18 @@ const {
   const fetch = require('node-fetch');
   
   fetchDevelopers  = () => {
-    return fetch("https://developer-service-overspeedy-celebratedness.cfapps.io/developers")
+    return fetch("https://tech-services-1000201953.uc.r.appspot.com/developers")
     .then(response=>response.json())
     .then(devs=>devs)
   }
-
+  //const developers = require('./developers.json')
   let developers = fetchDevelopers();
   
   const developer = new GraphQLObjectType({
     name: 'Developer',
     fields: {
       id: {
-        type: GraphQLInt
+        type: GraphQLString
       },
       firstName: {
         type: GraphQLString
@@ -48,7 +48,7 @@ const {
           type: developer,
           args: {
             id: {
-              type: GraphQLInt
+              type: GraphQLString
             }
           },
           resolve: (r, {id}) => developers.then(devs=>devs.find(dev=>dev.id == id))
